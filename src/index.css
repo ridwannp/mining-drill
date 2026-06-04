@@ -1,0 +1,460 @@
+@import "tailwindcss";
+
+/* ========================================
+   DrillOps — Mining Drill Hole Management
+   Design System
+   ======================================== */
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Slate-based industrial dark palette */
+  --color-slate-950: #020617;
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f1f5f9;
+  --color-slate-50: #f8fafc;
+
+  /* Amber accent — industrial / mining */
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+
+  /* Status colors */
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-400: #34d399;
+  --color-yellow-500: #eab308;
+  --color-yellow-400: #facc15;
+  --color-red-500: #ef4444;
+  --color-red-400: #f87171;
+  --color-sky-500: #0ea5e9;
+  --color-sky-400: #38bdf8;
+}
+
+/* ---- Base Resets ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: #0b1120;
+  color: var(--color-slate-200);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+}
+
+#root > * {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+.ant-app {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-slate-700);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-600);
+}
+
+/* ---- Ant Design Dark Overrides ---- */
+.ant-modal .ant-modal-content {
+  background: var(--color-slate-800) !important;
+  border: 1px solid var(--color-slate-700) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5) !important;
+}
+.ant-modal .ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--color-slate-700) !important;
+  padding: 20px 24px !important;
+}
+.ant-modal .ant-modal-title {
+  color: var(--color-slate-100) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+.ant-modal .ant-modal-body {
+  padding: 24px !important;
+}
+.ant-modal .ant-modal-close {
+  color: var(--color-slate-400) !important;
+}
+.ant-modal .ant-modal-close:hover {
+  color: var(--color-slate-100) !important;
+  background: var(--color-slate-700) !important;
+}
+.ant-modal .ant-modal-footer {
+  border-top: 1px solid var(--color-slate-700) !important;
+  padding: 16px 24px !important;
+}
+
+.ant-input,
+.ant-input-textarea textarea {
+  background: var(--color-slate-900) !important;
+  border: 1px solid var(--color-slate-600) !important;
+  color: var(--color-slate-100) !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  transition: border-color 0.2s !important;
+}
+.ant-input:focus,
+.ant-input-textarea textarea:focus,
+.ant-input:hover,
+.ant-input-textarea textarea:hover {
+  border-color: var(--color-amber-500) !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15) !important;
+}
+.ant-input::placeholder,
+.ant-input-textarea textarea::placeholder {
+  color: var(--color-slate-500) !important;
+}
+
+/* Input dengan prefix/suffix — padding & border ada di wrapper, bukan elemen input dalam */
+.ant-input-affix-wrapper {
+  background: var(--color-slate-900) !important;
+  border: 1px solid var(--color-slate-600) !important;
+  border-radius: 8px !important;
+  padding-inline: 14px !important;
+  padding-block: 10px !important;
+}
+.ant-input-affix-wrapper:hover,
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:focus-within {
+  border-color: var(--color-amber-500) !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15) !important;
+}
+.ant-input-affix-wrapper > .ant-input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.ant-input-affix-wrapper > .ant-input:focus,
+.ant-input-affix-wrapper > .ant-input:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+.ant-input-affix-wrapper .ant-input-prefix {
+  margin-inline-end: 10px !important;
+}
+
+.ant-input-number {
+  background: var(--color-slate-900) !important;
+  border: 1px solid var(--color-slate-600) !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+}
+.ant-input-number .ant-input-number-input {
+  color: var(--color-slate-100) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+.ant-input-number:focus,
+.ant-input-number:hover,
+.ant-input-number-focused {
+  border-color: var(--color-amber-500) !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15) !important;
+}
+.ant-input-number-handler-wrap {
+  background: var(--color-slate-800) !important;
+  border-left: 1px solid var(--color-slate-600) !important;
+}
+.ant-input-number-handler {
+  border-color: var(--color-slate-600) !important;
+  color: var(--color-slate-400) !important;
+}
+.ant-input-number-handler:hover {
+  color: var(--color-amber-500) !important;
+}
+
+.ant-select .ant-select-selector {
+  background: var(--color-slate-900) !important;
+  border: 1px solid var(--color-slate-600) !important;
+  color: var(--color-slate-100) !important;
+  border-radius: 8px !important;
+}
+.ant-select:hover .ant-select-selector,
+.ant-select-focused .ant-select-selector {
+  border-color: var(--color-amber-500) !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15) !important;
+}
+.ant-select-dropdown {
+  background: var(--color-slate-800) !important;
+  border: 1px solid var(--color-slate-700) !important;
+  border-radius: 8px !important;
+}
+.ant-select-item {
+  color: var(--color-slate-300) !important;
+}
+.ant-select-item-option-selected {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: var(--color-amber-400) !important;
+}
+.ant-select-item-option-active {
+  background: var(--color-slate-700) !important;
+}
+.ant-select-arrow {
+  color: var(--color-slate-400) !important;
+}
+
+/* Form labels */
+.ant-form-item .ant-form-item-label > label {
+  color: var(--color-slate-300) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+}
+
+/* Progress bar */
+.ant-progress .ant-progress-inner {
+  background: var(--color-slate-700) !important;
+}
+
+/* Badge / Tag */
+.ant-tag {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+/* Drawer overrides */
+.ant-drawer .ant-drawer-content {
+  background: var(--color-slate-900) !important;
+}
+.ant-drawer .ant-drawer-header {
+  background: var(--color-slate-800) !important;
+  border-bottom: 1px solid var(--color-slate-700) !important;
+}
+.ant-drawer .ant-drawer-title {
+  color: var(--color-slate-100) !important;
+}
+.ant-drawer .ant-drawer-close {
+  color: var(--color-slate-400) !important;
+}
+
+/* Tooltip */
+.ant-tooltip .ant-tooltip-inner {
+  background: var(--color-slate-700) !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+}
+
+/* ---- Custom utility classes ---- */
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(71, 85, 105, 0.4);
+  border-radius: 12px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.stat-card:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Hole card base */
+.hole-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 80px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.hole-card:active {
+  transform: scale(0.97);
+}
+
+.hole-card--empty {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: rgba(71, 85, 105, 0.35);
+}
+.hole-card--empty:hover {
+  background: rgba(71, 85, 105, 0.35);
+  border-color: rgba(100, 116, 139, 0.5);
+}
+
+.hole-card--completed {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+.hole-card--completed:hover {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.55);
+}
+
+.hole-card--pending {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: rgba(234, 179, 8, 0.35);
+}
+.hole-card--pending:hover {
+  background: rgba(234, 179, 8, 0.18);
+  border-color: rgba(234, 179, 8, 0.55);
+}
+
+.hole-card--error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.hole-card--error:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.55);
+}
+
+.hole-card--selected {
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
+  border-color: var(--color-amber-500) !important;
+}
+
+/* Responsive grid sizing */
+@media (max-width: 640px) {
+  .hole-card {
+    min-height: 68px;
+    padding: 10px 6px;
+    border-radius: 8px;
+  }
+}
+
+/* ---- Sidebar ---- */
+
+.sidebar {
+  width: 260px;
+  min-height: 100dvh;
+  background: var(--color-slate-900);
+  border-right: 1px solid var(--color-slate-800);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 50;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+  .sidebar.sidebar--open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+}
+
+/* ---- Animations ---- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile bottom sheet */
+@media (max-width: 640px) {
+  .ant-modal {
+    top: auto !important;
+    bottom: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+  .ant-modal .ant-modal-content {
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 85dvh;
+    overflow-y: auto;
+  }
+  .ant-modal-wrap,
+  .confirm-modal-wrap {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+  .ant-modal-confirm-centered .ant-modal,
+  .confirm-modal-wrap .ant-modal {
+    top: auto !important;
+    bottom: 0 !important;
+    transform: none !important;
+  }
+  .ant-modal-confirm .ant-modal-confirm-btns {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  .ant-modal-confirm .ant-modal-confirm-btns .ant-btn {
+    width: 100%;
+    margin-inline-start: 0 !important;
+  }
+}
+
+/* Confirm modal — full width on small screens, fixed width on desktop */
+@media (min-width: 641px) {
+  .confirm-modal-wrap .ant-modal {
+    max-width: min(480px, calc(100vw - 48px));
+  }
+}
