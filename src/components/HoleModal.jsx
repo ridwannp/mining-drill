@@ -78,24 +78,26 @@ const HoleModal = () => {
         </div>
       }
       footer={
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-between gap-2">
           <Button
             id="btn-hole-reset"
             danger
             type="text"
             onClick={handleReset}
             disabled={hole?.status === 'empty'}
+            className="!w-full sm:!w-auto"
           >
             Reset Hole
           </Button>
-          <div className="flex gap-2">
-            <Button id="btn-hole-cancel" onClick={handleClose}>
+          <div className="flex flex-col-reverse sm:flex-row gap-2">
+            <Button id="btn-hole-cancel" onClick={handleClose} className="!w-full sm:!w-auto">
               Cancel
             </Button>
             <Button
               id="btn-hole-save"
               type="primary"
               onClick={handleSave}
+              className="!w-full sm:!w-auto"
               style={{
                 background: 'linear-gradient(135deg, #d97706, #f59e0b)',
                 borderColor: 'transparent',
@@ -107,9 +109,10 @@ const HoleModal = () => {
           </div>
         </div>
       }
-      width={420}
+      width="95%"
+      style={{ maxWidth: '420px' }}
       destroyOnClose
-      centered
+      wrapClassName="responsive-modal-wrap"
     >
       <Form form={form} layout="vertical" className="mt-2">
         {/* Depth input — the most important field */}

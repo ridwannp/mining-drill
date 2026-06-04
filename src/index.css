@@ -294,6 +294,12 @@ body {
   border-color: rgba(245, 158, 11, 0.3);
   transform: translateY(-1px);
 }
+@media (max-width: 640px) {
+  .stat-card {
+    padding: 14px 12px;
+    border-radius: 10px;
+  }
+}
 
 /* Hole card base */
 .hole-card {
@@ -360,9 +366,33 @@ body {
 /* Responsive grid sizing */
 @media (max-width: 640px) {
   .hole-card {
-    min-height: 68px;
-    padding: 10px 6px;
+    min-height: 60px;
+    padding: 8px 4px;
     border-radius: 8px;
+    gap: 2px;
+  }
+}
+@media (max-width: 380px) {
+  .hole-card {
+    min-height: 54px;
+    padding: 6px 3px;
+  }
+}
+
+/* Responsive grid columns for hole grid */
+.hole-grid-cols {
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+@media (max-width: 640px) {
+  .hole-grid-cols {
+    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+    gap: 6px;
+  }
+}
+@media (max-width: 380px) {
+  .hole-grid-cols {
+    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+    gap: 4px;
   }
 }
 
@@ -386,6 +416,7 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
+    width: 280px;
     transform: translateX(-100%);
   }
   .sidebar.sidebar--open {
@@ -396,6 +427,10 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 40;
+  }
+  /* Make delete button visible on touch devices */
+  .sidebar .group button[title="Delete area"] {
+    opacity: 1;
   }
 }
 
@@ -413,27 +448,102 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile bottom sheet */
+/* ---- Responsive Modal System ---- */
+
+.responsive-modal-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+/* Push modal down */
+.responsive-modal-wrap::before {
+  content: "";
+  margin-top: auto;
+}
+/* Push modal up on desktop */
+.responsive-modal-wrap::after {
+  content: "";
+  margin-bottom: auto;
+}
+.responsive-modal-wrap .ant-modal {
+  top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Mobile: bottom-sheet style */
 @media (max-width: 640px) {
-  .ant-modal {
-    top: auto !important;
-    bottom: 0 !important;
+  .responsive-modal-wrap::after {
+    display: none; /* Remove bottom push so it docks to the bottom */
+  }
+  .responsive-modal-wrap .ant-modal {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .responsive-modal-wrap .ant-modal .ant-modal-content {
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 92dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .responsive-modal-wrap .ant-modal .ant-modal-header {
+    padding: 16px !important;
+    flex-shrink: 0;
+  }
+  .responsive-modal-wrap .ant-modal .ant-modal-body {
+    padding: 16px !important;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+  .responsive-modal-wrap .ant-modal .ant-modal-footer {
+    padding: 12px 16px !important;
+    flex-shrink: 0;
+    border-top: 1px solid var(--color-slate-700) !important;
+    background: var(--color-slate-800);
+  }
+  .responsive-modal-wrap .ant-modal .ant-modal-close {
+    top: 12px !important;
+    right: 12px !important;
+  }
+}
+
+/* Generic fallback for any modal on mobile (e.g. confirm dialogs) */
+@media (max-width: 640px) {
+  .ant-modal-wrap:not(.responsive-modal-wrap) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .ant-modal-wrap:not(.responsive-modal-wrap)::before {
+    content: "";
+    margin-top: auto;
+  }
+  .ant-modal-wrap:not(.responsive-modal-wrap) .ant-modal {
+    top: 0 !important;
     padding-bottom: 0 !important;
     margin: 0 !important;
     max-width: 100% !important;
     width: 100% !important;
     transform: none !important;
+    flex-shrink: 0;
   }
-  .ant-modal .ant-modal-content {
+  .ant-modal-wrap:not(.responsive-modal-wrap) .ant-modal .ant-modal-content {
     border-radius: 16px 16px 0 0 !important;
-    max-height: 85dvh;
+    max-height: 90dvh;
     overflow-y: auto;
   }
-  .ant-modal-wrap,
   .confirm-modal-wrap {
     display: flex !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .confirm-modal-wrap::before {
+    content: "";
+    margin-top: auto;
   }
   .ant-modal-confirm-centered .ant-modal,
   .confirm-modal-wrap .ant-modal {
@@ -449,6 +559,25 @@ body {
   .ant-modal-confirm .ant-modal-confirm-btns .ant-btn {
     width: 100%;
     margin-inline-start: 0 !important;
+  }
+}
+
+/* Mobile responsive utilities */
+@media (max-width: 640px) {
+  /* Full-width selects & inputs on mobile */
+  .ant-select {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Smaller font sizes for stat values */
+  .stat-card p:first-child {
+    font-size: 1.25rem !important;
+  }
+
+  /* Progress bar section tighter on mobile */
+  .glass-card {
+    padding: 12px 14px;
   }
 }
 

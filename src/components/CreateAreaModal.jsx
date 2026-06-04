@@ -58,13 +58,14 @@ const CreateAreaModal = ({ open, onClose }) => {
         </div>
       }
       footer={
-        <div className="flex justify-end gap-2">
-          <Button onClick={onClose}>Cancel</Button>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+          <Button onClick={onClose} className="!w-full sm:!w-auto">Cancel</Button>
           <Button
             id="btn-confirm-create"
             type="primary"
             loading={loading}
             onClick={handleCreate}
+            className="!w-full sm:!w-auto"
             style={{
               background: 'linear-gradient(135deg, #d97706, #f59e0b)',
               borderColor: 'transparent',
@@ -75,10 +76,11 @@ const CreateAreaModal = ({ open, onClose }) => {
           </Button>
         </div>
       }
-      width={1200}
-      centered
+      width="95%"
+      style={{ maxWidth: '1200px' }}
+      wrapClassName="responsive-modal-wrap"
     >
-      <div className="flex flex-col md:flex-row gap-6 mt-3">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-1 md:mt-3">
         {/* Left Side: Form */}
         <div className="flex-1">
           <Form
@@ -165,8 +167,8 @@ const CreateAreaModal = ({ open, onClose }) => {
             </div>
 
             {previewTotal > 0 ? (
-              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar" style={{ maxHeight: '350px' }}>
-                <div className="flex flex-col gap-3">
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar" style={{ maxHeight: '250px' }}>
+                <div className="flex flex-col gap-2 sm:gap-3">
                   {Array.from({ length: rows || 0 }, (_, r) => {
                     const rowLabel = String.fromCharCode(65 + r);
                     return (
@@ -180,7 +182,7 @@ const CreateAreaModal = ({ open, onClose }) => {
                             return (
                               <div
                                 key={id}
-                                className="hole-card hole-card--empty !min-h-[50px] !w-[50px] !p-1"
+                                className="hole-card hole-card--empty !min-h-[40px] sm:!min-h-[50px] !w-[40px] sm:!w-[50px] !p-1"
                               >
                                 <span className="text-xs font-bold text-slate-300 leading-none">{id}</span>
                                 <span className="text-[9px] uppercase tracking-wider text-slate-500 leading-none mt-1">Empty</span>

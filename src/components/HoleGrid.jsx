@@ -53,10 +53,7 @@ const HoleGrid = () => {
 
           {/* Holes in this row */}
           <div
-            className="grid gap-2"
-            style={{
-              gridTemplateColumns: `repeat(auto-fill, minmax(80px, 1fr))`,
-            }}
+            className="grid gap-2 hole-grid-cols"
           >
             {holes.map((hole) => (
               <HoleCard key={hole.id} hole={hole} />

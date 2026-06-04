@@ -35,12 +35,12 @@ const TopBar = ({ onExport }) => {
             <h2 className="text-base md:text-lg font-semibold text-slate-100 truncate leading-tight">
               {area.name}
             </h2>
-            <p className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
-              <span>{area.rows}×{area.cols} grid</span>
-              <span className="text-slate-700">•</span>
-              <span>{area.location || 'No location'}</span>
-              <span className="text-slate-700">•</span>
-              <span>{area.date}</span>
+            <p className="text-xs text-slate-500 flex items-center gap-2 mt-0.5 truncate">
+              <span className="flex-shrink-0">{area.rows}×{area.cols} grid</span>
+              <span className="text-slate-700 hidden sm:inline">•</span>
+              <span className="hidden sm:inline truncate">{area.location || 'No location'}</span>
+              <span className="text-slate-700 hidden md:inline">•</span>
+              <span className="hidden md:inline flex-shrink-0">{area.date}</span>
             </p>
           </div>
         ) : (
