@@ -111,7 +111,7 @@ const HoleModal = () => {
       }
       width="95%"
       style={{ maxWidth: '420px' }}
-      destroyOnClose
+      destroyOnHidden
       wrapClassName="responsive-modal-wrap"
     >
       <Form form={form} layout="vertical" className="mt-2">

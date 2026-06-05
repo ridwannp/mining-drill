@@ -19,8 +19,9 @@ const FilterBar = () => {
   return (
     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 animate-fade-in">
       {/* Search */}
-      <div className="flex-1">
+      <div className="flex-1 ">
         <Input
+          className='w-[100px]'
           id="input-search-hole"
           placeholder="Search hole ID (e.g. A12)"
           value={searchQuery}

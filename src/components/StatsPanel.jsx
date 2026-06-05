@@ -94,7 +94,7 @@ const StatsPanel = () => {
               '0%': '#f59e0b',
               '100%': '#10b981',
             }}
-            trailColor="rgba(71,85,105,0.4)"
+            railColor="rgba(71,85,105,0.4)"
             size="small"
           />
         </div>

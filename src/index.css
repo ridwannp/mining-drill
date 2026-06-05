@@ -301,7 +301,6 @@ body {
   }
 }
 
-/* Hole card base */
 .hole-card {
   position: relative;
   display: flex;
@@ -310,11 +309,14 @@ body {
   justify-content: center;
   gap: 4px;
   padding: 12px 8px;
-  border-radius: 10px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 80px;
+  min-height: unset;
+  height: 80px;
+  width: 80px;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -366,15 +368,17 @@ body {
 /* Responsive grid sizing */
 @media (max-width: 640px) {
   .hole-card {
-    min-height: 60px;
+    height: 65px;
+    width: 65px;
     padding: 8px 4px;
-    border-radius: 8px;
+    border-radius: 50%;
     gap: 2px;
   }
 }
 @media (max-width: 380px) {
   .hole-card {
-    min-height: 54px;
+    height: 58px;
+    width: 58px;
     padding: 6px 3px;
   }
 }

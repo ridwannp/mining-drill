@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { Modal } from 'antd';
 import useDrillStore from '../store/useDrillStore';
 import { useConfirmModal } from '../hooks/useConfirmModal';
 
@@ -13,6 +14,7 @@ const Sidebar = ({ onCreateArea }) => {
   const sidebarOpen = useDrillStore((s) => s.sidebarOpen);
   const setSidebarOpen = useDrillStore((s) => s.setSidebarOpen);
   const { confirm } = useConfirmModal();
+  const [detailArea, setDetailArea] = useState(null);
 
   const sortedAreas = useMemo(
     () => [...areas].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
@@ -93,11 +95,10 @@ const Sidebar = ({ onCreateArea }) => {
                 <div
                   key={area.id}
                   id={`sidebar-area-${area.id}`}
-                  className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors ${
-                    isActive
+                  className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors ${isActive
                       ? 'bg-slate-800 border border-amber-500/30'
                       : 'hover:bg-slate-800/50 border border-transparent'
-                  }`}
+                    }`}
                   onClick={() => handleSelectArea(area.id)}
                 >
                   {/* Progress indicator circle */}
@@ -132,28 +133,48 @@ const Sidebar = ({ onCreateArea }) => {
                     </p>
                   </div>
 
-                  {/* Delete button */}
-                  <button
-                    id={`btn-delete-area-${area.id}`}
-                    className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-red-500/20 text-slate-500 hover:text-red-400 transition-all cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      confirm({
-                        title: 'Delete Blasting Area',
-                        content: `Delete "${area.name}"? This cannot be undone.`,
-                        okText: 'Delete',
-                        cancelText: 'Cancel',
-                        danger: true,
-                        onOk: () => deleteArea(area.id),
-                      });
-                    }}
-                    title="Delete area"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                      <polyline points="3 6 5 6 21 6" />
-                      <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
-                    </svg>
-                  </button>
+                  {/* Action buttons */}
+                  <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all">
+                    {/* Info / Detail button */}
+                    <button
+                      id={`btn-info-area-${area.id}`}
+                      className="p-1 rounded hover:bg-sky-500/20 text-slate-500 hover:text-sky-400 transition-all cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDetailArea(area);
+                      }}
+                      title="Area details"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                      </svg>
+                    </button>
+
+                    {/* Delete button */}
+                    <button
+                      id={`btn-delete-area-${area.id}`}
+                      className="p-1 rounded hover:bg-red-500/20 text-slate-500 hover:text-red-400 transition-all cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        confirm({
+                          title: 'Delete Blasting Area',
+                          content: `Delete "${area.name}"? This cannot be undone.`,
+                          okText: 'Delete',
+                          cancelText: 'Cancel',
+                          danger: true,
+                          onOk: () => deleteArea(area.id),
+                        });
+                      }}
+                      title="Delete area"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -167,8 +188,80 @@ const Sidebar = ({ onCreateArea }) => {
           </p>
         </div>
       </aside>
+      {/* Detail Modal */}
+      <Modal
+        open={!!detailArea}
+        onCancel={() => setDetailArea(null)}
+        footer={null}
+        width={480}
+        wrapClassName="responsive-modal-wrap"
+        title={
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            </div>
+            <span>Area Details</span>
+          </div>
+        }
+      >
+        {detailArea && (
+          <div className="flex flex-col gap-4 mt-2">
+            {/* Area Name */}
+            <div>
+              <h3 className="text-lg font-bold text-slate-100 mb-1">{detailArea.name}</h3>
+              <p className="text-xs text-slate-500">Created {new Date(detailArea.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+            </div>
+
+            <div className="h-px bg-slate-700/60" />
+
+            {/* Grid of detail items */}
+            <div className="grid grid-cols-2 gap-3">
+              <DetailItem label="Group Leader" value={detailArea.groupLeader} />
+              <DetailItem label="Crew" value={detailArea.crew} />
+              <DetailItem label="Shift" value={detailArea.shift === 'shift2' ? 'Shift 2 (Malam)' : 'Shift 1 (Pagi)'} />
+              <DetailItem label="Operation Date" value={detailArea.date || '—'} />
+              <DetailItem label="Location" value={detailArea.location} />
+              <DetailItem label="Grid" value={`${detailArea.rows} × ${detailArea.cols}`} />
+            </div>
+
+            <div className="h-px bg-slate-700/60" />
+
+            {/* Drill Parameters */}
+            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Drill Parameters</p>
+            <div className="grid grid-cols-3 gap-3">
+              <DetailCard label="Burden" value={detailArea.burden} unit="m" />
+              <DetailCard label="Spasi" value={detailArea.spasi} unit="m" />
+              <DetailCard label="Diameter" value={detailArea.diameter} unit="mm" />
+            </div>
+          </div>
+        )}
+      </Modal>
     </>
   );
 };
+
+/** Small label + value pair */
+const DetailItem = ({ label, value }) => (
+  <div>
+    <p className="text-[11px] text-slate-500 font-medium mb-0.5">{label}</p>
+    <p className="text-sm text-slate-200 font-medium">{value || '—'}</p>
+  </div>
+);
+
+/** Numeric value card for drill parameters */
+const DetailCard = ({ label, value, unit }) => (
+  <div className="rounded-lg bg-slate-800/60 border border-slate-700/40 p-3 text-center">
+    <p className="text-lg font-bold text-amber-400 leading-none mb-1">
+      {value != null ? value : '—'}
+    </p>
+    <p className="text-[10px] text-slate-500 uppercase tracking-wider">
+      {label} {unit && <span className="text-slate-600">({unit})</span>}
+    </p>
+  </div>
+);
 
 export default Sidebar;

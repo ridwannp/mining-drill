@@ -55,11 +55,25 @@ const HoleCard = ({ hole }) => {
     </div>
   );
 
+  const getDynamicStyle = () => {
+    if (hole.status !== 'completed' || hole.depth === null || hole.depth === undefined) return {};
+    // Calculate hue: 0 (Red) for depth 0, up to 120 (Green) for depth >= 6
+    const hue = Math.min(120, Math.max(0, (hole.depth / 6) * 120));
+    return {
+      backgroundColor: `hsla(${hue}, 80%, 25%, 0.3)`,
+      borderColor: `hsla(${hue}, 80%, 45%, 0.8)`,
+      boxShadow: isSelected ? `0 0 0 2px hsla(${hue}, 80%, 50%, 0.5)` : 'none'
+    };
+  };
+
+  const dynamicStyle = getDynamicStyle();
+
   return (
     <Tooltip title={tooltipContent} placement="top" mouseEnterDelay={0.4}>
       <div
         id={`hole-${hole.id}`}
-        className={`hole-card ${cfg.className} ${isSelected ? 'hole-card--selected' : ''}`}
+        className={`hole-card ${cfg.className} ${isSelected && hole.status !== 'completed' ? 'hole-card--selected' : ''}`}
+        style={dynamicStyle}
         onClick={() => selectHole(hole.id)}
         role="button"
         tabIndex={0}

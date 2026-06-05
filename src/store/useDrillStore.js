@@ -9,7 +9,10 @@ const generateHoles = (rows, cols) => {
   const holes = {};
   for (let r = 0; r < rows; r++) {
     const rowLabel = String.fromCharCode(65 + r); // A, B, C, ...
-    for (let c = 1; c <= cols; c++) {
+    const isEvenRow = r % 2 !== 0; // index 1 is Row B (even row)
+    const rowCols = isEvenRow ? Math.max(1, cols - 1) : cols;
+
+    for (let c = 1; c <= rowCols; c++) {
       const id = `${rowLabel}${c}`;
       holes[id] = {
         id,
@@ -42,7 +45,7 @@ const useDrillStore = create(
       // ------- Actions -------
 
       /** Create a new blasting area */
-      createArea: ({ name, rows, cols, location, date }) => {
+      createArea: ({ name, rows, cols, location, date, groupLeader, crew, shift, burden, spasi, diameter }) => {
         const id = `area-${Date.now()}`;
         const holes = generateHoles(rows, cols);
         const area = {
@@ -52,6 +55,12 @@ const useDrillStore = create(
           cols,
           location: location || '',
           date: date || new Date().toISOString().split('T')[0],
+          groupLeader: groupLeader || '',
+          crew: crew || '',
+          shift: shift || 'shift1',
+          burden: burden || null,
+          spasi: spasi || null,
+          diameter: diameter || null,
           holes,
           createdAt: new Date().toISOString(),
         };
