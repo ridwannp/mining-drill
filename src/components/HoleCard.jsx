@@ -45,6 +45,7 @@ const HoleCard = ({ hole }) => {
     <div>
       <div className="font-semibold">{hole.id}</div>
       <div>Status: {hole.status}</div>
+      <div className="capitalize">Condition: {hole.condition || 'Kering'}</div>
       {hole.depth !== null && <div>Depth: {hole.depth}m</div>}
       {hole.notes && <div>Notes: {hole.notes}</div>}
       {hole.updatedAt && (

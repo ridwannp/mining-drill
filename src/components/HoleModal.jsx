@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Modal, InputNumber, Input, Button, Form, Tag } from 'antd';
+import { Modal, InputNumber, Input, Button, Form, Tag, Radio } from 'antd';
 import useDrillStore from '../store/useDrillStore';
 import { useActiveArea } from '../hooks/useDrillSelectors';
 
@@ -24,6 +24,7 @@ const HoleModal = () => {
       form.setFieldsValue({
         depth: hole.depth,
         notes: hole.notes || '',
+        condition: hole.condition || 'kering',
       });
       // Auto-focus depth input
       setTimeout(() => {
@@ -37,6 +38,7 @@ const HoleModal = () => {
     saveHoleMeasurement(selectedHoleId, {
       depth: values.depth,
       notes: values.notes || '',
+      condition: values.condition || 'kering',
     });
   };
 
@@ -136,6 +138,20 @@ const HoleModal = () => {
             style={{ width: '100%', height: 48 }}
             addonAfter={<span className="text-slate-400">m</span>}
           />
+        </Form.Item>
+
+        {/* Condition */}
+        <Form.Item
+          name="condition"
+          label={
+            <span className="text-slate-300 font-medium">Hole Condition</span>
+          }
+        >
+          <Radio.Group className="w-full grid grid-cols-3 gap-2" buttonStyle="solid">
+            <Radio.Button value="kering" className="text-center rounded !border-slate-600">Kering</Radio.Button>
+            <Radio.Button value="basah" className="text-center rounded !border-slate-600">Basah</Radio.Button>
+            <Radio.Button value="collapse" className="text-center rounded !border-slate-600">Collapse</Radio.Button>
+          </Radio.Group>
         </Form.Item>
 
         {/* Notes */}

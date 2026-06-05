@@ -23,6 +23,7 @@ export const useFilteredHoles = () => {
   const activeAreaId = useDrillStore((s) => s.activeAreaId);
   const searchQuery = useDrillStore((s) => s.searchQuery);
   const statusFilter = useDrillStore((s) => s.statusFilter);
+  const conditionFilter = useDrillStore((s) => s.conditionFilter);
 
   return useMemo(() => {
     const area = areas.find((a) => a.id === activeAreaId);
@@ -40,6 +41,11 @@ export const useFilteredHoles = () => {
     if (statusFilter !== 'all') {
       holes = holes.filter((h) => h.status === statusFilter);
     }
+    
+    // Condition filter
+    if (conditionFilter !== 'all') {
+      holes = holes.filter((h) => h.condition === conditionFilter);
+    }
 
     // Sort: row first (A, B, C), then column (1, 2, 3)
     holes.sort((a, b) => {
@@ -48,7 +54,7 @@ export const useFilteredHoles = () => {
     });
 
     return holes;
-  }, [areas, activeAreaId, searchQuery, statusFilter]);
+  }, [areas, activeAreaId, searchQuery, statusFilter, conditionFilter]);
 };
 
 /**

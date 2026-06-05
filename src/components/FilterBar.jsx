@@ -11,6 +11,8 @@ const FilterBar = () => {
   const statusFilter = useDrillStore((s) => s.statusFilter);
   const setSearchQuery = useDrillStore((s) => s.setSearchQuery);
   const setStatusFilter = useDrillStore((s) => s.setStatusFilter);
+  const conditionFilter = useDrillStore((s) => s.conditionFilter);
+  const setConditionFilter = useDrillStore((s) => s.setConditionFilter);
   const resetAllHoles = useDrillStore((s) => s.resetAllHoles);
   const { confirm } = useConfirmModal();
   const area = useActiveArea();
@@ -42,14 +44,28 @@ const FilterBar = () => {
         id="select-status-filter"
         value={statusFilter}
         onChange={(val) => setStatusFilter(val)}
-        style={{ minWidth: 160 }}
+        style={{ minWidth: 140 }}
         size="large"
         options={[
           { value: 'all', label: 'All Status' },
           { value: 'empty', label: '⬜ Empty' },
           { value: 'completed', label: '🟢 Completed' },
-          { value: 'pending', label: '🟡 Pending' },
-          { value: 'error', label: '🔴 Error' },
+          { value: 'pending', label: '🟡 Pending' }
+        ]}
+      />
+
+      {/* Condition filter */}
+      <Select
+        id="select-condition-filter"
+        value={conditionFilter}
+        onChange={(val) => setConditionFilter(val)}
+        style={{ minWidth: 140 }}
+        size="large"
+        options={[
+          { value: 'all', label: 'All Conditions' },
+          { value: 'kering', label: 'Kering' },
+          { value: 'basah', label: 'Basah' },
+          { value: 'collapse', label: 'Collapse' },
         ]}
       />
 

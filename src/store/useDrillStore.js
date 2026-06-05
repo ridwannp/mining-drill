@@ -21,6 +21,7 @@ const generateHoles = (rows, cols) => {
         depth: null,
         notes: '',
         status: 'empty', // empty | completed | pending | error
+        condition: 'kering', // kering | basah | collapse
         updatedAt: null,
         updatedBy: null,
       };
@@ -40,6 +41,7 @@ const useDrillStore = create(
       selectedHoleId: null,
       searchQuery: '',
       statusFilter: 'all', // all | empty | completed | pending | error
+      conditionFilter: 'all', // all | kering | basah | collapse
       sidebarOpen: false,
 
       // ------- Actions -------
@@ -70,6 +72,7 @@ const useDrillStore = create(
           selectedHoleId: null,
           searchQuery: '',
           statusFilter: 'all',
+          conditionFilter: 'all',
         }));
         return id;
       },
@@ -81,6 +84,7 @@ const useDrillStore = create(
           selectedHoleId: null,
           searchQuery: '',
           statusFilter: 'all',
+          conditionFilter: 'all',
         }),
 
       /** Delete a blasting area */
@@ -102,7 +106,7 @@ const useDrillStore = create(
       selectHole: (holeId) => set({ selectedHoleId: holeId }),
 
       /** Save depth measurement for a hole */
-      saveHoleMeasurement: (holeId, { depth, notes }) =>
+      saveHoleMeasurement: (holeId, { depth, notes, condition }) =>
         set((state) => {
           const area = state.areas.find((a) => a.id === state.activeAreaId);
           if (!area) return {};
@@ -115,6 +119,7 @@ const useDrillStore = create(
             ...hole,
             depth: depth !== null && depth !== undefined && depth !== '' ? Number(depth) : null,
             notes: notes || '',
+            condition: condition || hole.condition || 'kering',
             status: hasError ? 'error' : 'completed',
             updatedAt: new Date().toISOString(),
             updatedBy: 'Operator',
@@ -161,6 +166,7 @@ const useDrillStore = create(
               depth: null,
               notes: '',
               status: 'empty',
+              condition: 'kering',
               updatedAt: null,
               updatedBy: null,
             },
@@ -185,6 +191,7 @@ const useDrillStore = create(
               depth: null,
               notes: '',
               status: 'empty',
+              condition: 'kering',
               updatedAt: null,
               updatedBy: null,
             };
@@ -199,6 +206,7 @@ const useDrillStore = create(
       // UI
       setSearchQuery: (q) => set({ searchQuery: q }),
       setStatusFilter: (f) => set({ statusFilter: f }),
+      setConditionFilter: (f) => set({ conditionFilter: f }),
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
 
